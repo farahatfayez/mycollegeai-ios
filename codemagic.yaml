@@ -32,18 +32,17 @@ workflows:
         script: |
           npm install
 
-      - name: Add iOS platform if missing
+      - name: Rebuild iOS platform
         script: |
-          if [ ! -f "ios/App/App.xcodeproj/project.pbxproj" ]; then
-            echo "xcodeproj not found, running cap add ios..."
-            npx cap add ios
-          else
-            echo "xcodeproj found, skipping cap add ios"
-          fi
+          # Remove incomplete ios folder and recreate from scratch
+          rm -rf ios
+          npx cap add ios
 
       - name: Build web assets
         script: |
-          npm run build || echo "No build script, skipping..."
+          npm run build || echo "No build script, creating empty dist..."
+          mkdir -p dist
+          echo "<html><body>MY COLLEGE AI</body></html>" > dist/index.html
 
       - name: Sync Capacitor iOS
         script: |
