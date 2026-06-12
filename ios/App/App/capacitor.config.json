@@ -1,0 +1,70 @@
+{
+	"appId": "com.mycollegeai.app",
+	"appName": "MY COLLEGE AI",
+	"webDir": "dist",
+	"server": {
+		"url": "https://mycolleg.com",
+		"cleartext": false,
+		"androidScheme": "https",
+		"allowNavigation": [
+			"mycolleg.com",
+			"www.mycolleg.com",
+			"*.mycolleg.com"
+		]
+	},
+	"ios": {
+		"contentInset": "automatic",
+		"scrollEnabled": true,
+		"backgroundColor": "#1a1f36",
+		"preferredContentMode": "mobile",
+		"allowsLinkPreview": false,
+		"handleApplicationNotifications": true
+	},
+	"plugins": {
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"alert"
+			]
+		},
+		"Camera": {
+			"permissions": [
+				"camera",
+				"photos"
+			]
+		},
+		"StatusBar": {
+			"style": "Dark",
+			"backgroundColor": "#1a1f36",
+			"overlaysWebView": false
+		},
+		"SplashScreen": {
+			"launchShowDuration": 2000,
+			"launchAutoHide": true,
+			"backgroundColor": "#1a1f36",
+			"androidSplashResourceName": "splash",
+			"androidScaleType": "CENTER_CROP",
+			"showSpinner": false,
+			"splashFullScreen": true,
+			"splashImmersive": true
+		},
+		"Keyboard": {
+			"resize": "body",
+			"style": "dark",
+			"resizeOnFullScreen": true
+		},
+		"App": {
+			"launchUrl": "https://mycolleg.com"
+		}
+	},
+	"packageClassList": [
+		"AppPlugin",
+		"CAPCameraPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"PushNotificationsPlugin",
+		"SplashScreenPlugin",
+		"StatusBarPlugin"
+	]
+}

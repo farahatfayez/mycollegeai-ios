@@ -1,15 +1,16 @@
 require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
 
-platform :ios, '16.0'
+platform :ios, '13.0'
 use_frameworks!
 
 # workaround to avoid Xcode caching of Pods that requires
-# temporary removal of target_support_files folder
+# Product -> Clean Build Folder after new Cordova plugins installed
+# Requires CocoaPods 1.6 or newer
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  pod 'Capacitor', :path => '../../node_modules/@capacitor/core'
-  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/core'
+  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
   pod 'CapacitorCamera', :path => '../../node_modules/@capacitor/camera'
   pod 'CapacitorHaptics', :path => '../../node_modules/@capacitor/haptics'
@@ -21,4 +22,9 @@ end
 
 target 'App' do
   capacitor_pods
+  # Add your Pods here
+end
+
+post_install do |installer|
+  assertDeploymentTarget(installer)
 end
