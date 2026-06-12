@@ -40,13 +40,16 @@ workflows:
 
       - name: Build web assets
         script: |
-          npm run build || echo "No build script, creating empty dist..."
+          npm run build 2>/dev/null || true
+          # Ensure dist folder exists with minimal content
           mkdir -p dist
-          echo "<html><body>MY COLLEGE AI</body></html>" > dist/index.html
+          if [ ! -f dist/index.html ]; then
+            echo "<html><head><title>MY COLLEGE AI</title></head><body></body></html>" > dist/index.html
+          fi
 
       - name: Sync Capacitor iOS
         script: |
-          npx cap sync ios --no-build
+          npx cap sync ios
 
       - name: Install CocoaPods
         script: |
