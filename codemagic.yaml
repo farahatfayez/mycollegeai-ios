@@ -11,8 +11,6 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.mycollegeai.app
-        provisioning_profile: MY_COLLEGE_AI_APP_STORE
-        certificate: Codemagic Admin
       vars:
         BUNDLE_ID: "com.mycollegeai.app"
         XCODE_PROJECT: "ios/App/App.xcodeproj"
