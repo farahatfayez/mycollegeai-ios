@@ -32,40 +32,51 @@ workflows:
         script: |
           npm install
 
-      - name: Rebuild iOS platform
-        script: |
-          # Backup custom Info.plist before rebuilding iOS platform
-          if [ -f ios/App/App/Info.plist ]; then
-            cp ios/App/App/Info.plist /tmp/Info.plist.backup
-            echo "✅ Info.plist backed up"
-          fi
-          # Remove and recreate iOS platform
-          rm -rf ios
-          npx cap add ios
-          echo "✅ iOS platform recreated"
-
-      - name: Restore custom Info.plist
-        script: |
-          # Restore our custom Info.plist with all Privacy keys
-          if [ -f /tmp/Info.plist.backup ]; then
-            cp /tmp/Info.plist.backup ios/App/App/Info.plist
-            echo "✅ Custom Info.plist restored with all Privacy keys"
-          else
-            echo "⚠️ No backup found, using default Info.plist"
-          fi
-
       - name: Build web assets
         script: |
           npm run build 2>/dev/null || true
-          # Ensure dist folder exists with minimal content
           mkdir -p dist
           if [ ! -f dist/index.html ]; then
             echo "<html><head><title>MY COLLEGE AI</title></head><body></body></html>" > dist/index.html
           fi
 
+      - name: Rebuild iOS platform
+        script: |
+          rm -rf ios
+          npx cap add ios
+          echo "✅ iOS platform recreated"
+
       - name: Sync Capacitor iOS
         script: |
           npx cap sync ios
+          echo "✅ Capacitor synced"
+
+      - name: Inject Privacy keys into Info.plist
+        script: |
+          PLIST="ios/App/App/Info.plist"
+          echo "📝 Injecting Privacy keys into Info.plist AFTER cap sync..."
+
+          # Remove any existing keys first (avoid duplicates)
+          /usr/libexec/PlistBuddy -c "Delete :NSCameraUsageDescription" "$PLIST" 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Delete :NSPhotoLibraryUsageDescription" "$PLIST" 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Delete :NSPhotoLibraryAddUsageDescription" "$PLIST" 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Delete :NSMicrophoneUsageDescription" "$PLIST" 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Delete :NSFaceIDUsageDescription" "$PLIST" 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Delete :ITSAppUsesNonExemptEncryption" "$PLIST" 2>/dev/null || true
+
+          # Add all required Privacy keys
+          /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string 'يحتاج التطبيق للكاميرا لتصوير المحاضرات والمواد الدراسية وتحليلها بالذكاء الاصطناعي'" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryUsageDescription string 'يحتاج التطبيق للوصول الى مكتبة الصور لرفع صور المحاضرات والمواد الدراسية وتحليلها بالذكاء الاصطناعي'" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string 'يحتاج التطبيق لحفظ الصور والملفات الدراسية في مكتبة الصور'" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Add :NSMicrophoneUsageDescription string 'يحتاج التطبيق للميكروفون لتسجيل الملاحظات الصوتية وتحويلها الى نص بالذكاء الاصطناعي'" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Add :NSFaceIDUsageDescription string 'يستخدم التطبيق Face ID لتامين الدخول وحماية بياناتك الدراسية'" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" "$PLIST"
+
+          echo "✅ Privacy keys injected successfully"
+          echo "--- Verifying ---"
+          /usr/libexec/PlistBuddy -c "Print :NSPhotoLibraryUsageDescription" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Print :NSCameraUsageDescription" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Print :NSMicrophoneUsageDescription" "$PLIST"
 
       - name: Install CocoaPods
         script: |
