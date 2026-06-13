@@ -34,9 +34,25 @@ workflows:
 
       - name: Rebuild iOS platform
         script: |
-          # Remove incomplete ios folder and recreate from scratch
+          # Backup custom Info.plist before rebuilding iOS platform
+          if [ -f ios/App/App/Info.plist ]; then
+            cp ios/App/App/Info.plist /tmp/Info.plist.backup
+            echo "✅ Info.plist backed up"
+          fi
+          # Remove and recreate iOS platform
           rm -rf ios
           npx cap add ios
+          echo "✅ iOS platform recreated"
+
+      - name: Restore custom Info.plist
+        script: |
+          # Restore our custom Info.plist with all Privacy keys
+          if [ -f /tmp/Info.plist.backup ]; then
+            cp /tmp/Info.plist.backup ios/App/App/Info.plist
+            echo "✅ Custom Info.plist restored with all Privacy keys"
+          else
+            echo "⚠️ No backup found, using default Info.plist"
+          fi
 
       - name: Build web assets
         script: |
