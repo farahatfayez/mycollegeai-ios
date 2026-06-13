@@ -46,13 +46,15 @@
 <key>UIStatusBarStyle</key>
 <string>UIStatusBarStyleLightContent</string>
 <key>NSCameraUsageDescription</key>
-<string>يحتاج التطبيق للكاميرا لتصوير المحاضرات وتحليلها بالذكاء الاصطناعي</string>
+<string>يحتاج التطبيق للكاميرا لتصوير المحاضرات والمواد الدراسية وتحليلها بالذكاء الاصطناعي</string>
 <key>NSPhotoLibraryUsageDescription</key>
-<string>يحتاج التطبيق للوصول للصور لرفع محتوى المحاضرات</string>
+<string>يحتاج التطبيق للوصول إلى مكتبة الصور لرفع صور المحاضرات والمواد الدراسية وتحليلها بالذكاء الاصطناعي</string>
 <key>NSPhotoLibraryAddUsageDescription</key>
-<string>يحتاج التطبيق لحفظ الصور في مكتبة الصور</string>
+<string>يحتاج التطبيق لحفظ الصور والملفات الدراسية في مكتبة الصور</string>
 <key>NSMicrophoneUsageDescription</key>
-<string>يحتاج التطبيق للميكروفون لتسجيل الملاحظات الصوتية</string>
+<string>يحتاج التطبيق للميكروفون لتسجيل الملاحظات الصوتية وتحويلها إلى نص بالذكاء الاصطناعي</string>
+<key>NSFaceIDUsageDescription</key>
+<string>يستخدم التطبيق Face ID لتأمين الدخول وحماية بياناتك الدراسية</string>
 <key>NSAppTransportSecurity</key>
 <dict>
 <key>NSAllowsArbitraryLoads</key>
