@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>MY COLLEGE AI</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1f36;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      color: #ffffff;
+      overflow: hidden;
+    }
+    .splash-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 40px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .logo-wrapper {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(99,179,237,0.2);
+    }
+    .logo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .app-name {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .app-tagline {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      line-height: 1.5;
+    }
+    .loading-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #63b3ed;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes pulse {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1); }
+    }
+    .version-text {
+      position: fixed;
+      bottom: 40px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-container">
+    <div class="logo-wrapper">
+      <!-- App icon embedded as base64 will be injected by Codemagic build -->
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;background:#1a1f36;">
+        <!-- Graduation cap -->
+        <polygon points="60,25 95,42 60,59 25,42" fill="#f6ad55" opacity="0.9"/>
+        <rect x="55" y="42" width="10" height="28" fill="#f6ad55" opacity="0.8"/>
+        <circle cx="65" cy="72" r="6" fill="#f6ad55" opacity="0.8"/>
+        <!-- AI brain circuit -->
+        <circle cx="60" cy="42" r="14" fill="#1a1f36" opacity="0.9"/>
+        <circle cx="60" cy="42" r="10" fill="none" stroke="#63b3ed" stroke-width="1.5" opacity="0.8"/>
+        <text x="60" y="46" text-anchor="middle" fill="#63b3ed" font-size="9" font-weight="bold" font-family="-apple-system,sans-serif">AI</text>
+        <!-- Circuit lines -->
+        <line x1="60" y1="28" x2="60" y2="32" stroke="#63b3ed" stroke-width="1" opacity="0.6"/>
+        <line x1="70" y1="30" x2="68" y2="34" stroke="#63b3ed" stroke-width="1" opacity="0.6"/>
+        <line x1="50" y1="30" x2="52" y2="34" stroke="#63b3ed" stroke-width="1" opacity="0.6"/>
+        <line x1="74" y1="42" x2="70" y2="42" stroke="#63b3ed" stroke-width="1" opacity="0.6"/>
+        <line x1="46" y1="42" x2="50" y2="42" stroke="#63b3ed" stroke-width="1" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="app-name">MY COLLEGE AI</div>
+    <div class="app-tagline">منصة التعليم الذكية<br>Smart Education Platform</div>
+    <div class="loading-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  <div class="version-text">v1.0.1</div>
+  <script>
+    // Capacitor will load the server URL automatically
+    // This splash screen shows briefly while the WebView initializes
+    // The actual app content is served from https://mycolleg.com via Capacitor server.url
+  </script>
+</body>
+</html>

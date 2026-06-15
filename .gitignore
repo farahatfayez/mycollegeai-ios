@@ -2,6 +2,7 @@ node_modules/
 ios/App/Pods/
 ios/App/App.xcworkspace/xcuserdata/
 dist/
+!dist/index.html
 .DS_Store
 *.p12
 *.mobileprovision
